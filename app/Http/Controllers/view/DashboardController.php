@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Cookie;
 
 class DashboardController extends Controller
 {
-    public function index($params = null)
+    public function index($params1 = null, $paramsEnd = null)
     {
-        return view('dashboard', ['params' => $params]);
+        $order_data = [];
+        return view('admin.dashboard', ['params' => $params1, 'order_data' => $order_data, 'paramsEnd' => $paramsEnd]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\View\Components\navbar;
 
+use App\Models\AuthModel;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -15,7 +16,7 @@ class navbar extends Component
     public $isLogin;
     public function __construct()
     {
-        $this->isLogin = true;
+        $this->isLogin = AuthModel::CheckSession()['bool'];
     }
 
     /**

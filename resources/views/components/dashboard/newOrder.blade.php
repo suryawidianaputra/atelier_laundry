@@ -1,4 +1,4 @@
-<div class="flex items-center justify-center min-h-screen">
+<div class="flex items-center justify-center ">
     <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         <form class="">
             <label class="block mb-2 font-medium text-gray-700">Nama Pelanggan</label>

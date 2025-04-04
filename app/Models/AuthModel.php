@@ -13,16 +13,24 @@ class AuthModel extends Model
             'bool' => session()->has('user_data') &&
                 session()->has('user_data.user_id') &&
                 session()->has('user_data.role'),
-            'data' => session('user_data')
+            'data' => session()->has('user_data') ? session('user_data') : ['user_id' => null, "role" => null]
         ];
     }
 
     public static function CheckCookie()
     {
-        $user_data = json_decode(Cookie::get('user_data'), true);
+        $user_data = json_decode(Cookie::get('user_data'), true) ?? ['user_id' => null, "role" => null];
         return [
             'bool' => $user_data['user_id'] && $user_data['role'],
             'data' => $user_data
         ];
+    }
+
+    public static function SetSession()
+    {
+        $user_data = self::CheckCookie()['data'];
+        if ($user_data['role'] && $user_data['user_id']) {
+            session(['user_data' => $user_data]);
+        }
     }
 }

@@ -17,10 +17,9 @@ class CheckCookieMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $user_data = AuthModel::CheckCookie()['data'];
-        if ($user_data['role'] && $user_data['user_id']) {
+        if (AuthModel::CheckCookie()['bool']) {
             session(['user_data' => $user_data]);
         }
-
         return $next($request);
     }
 }

@@ -24,9 +24,9 @@ class AuthorizationMiddleware
             return redirect('/')->with('error', 'Unauthorizeds');
         } else if ($login == 'no') {
             if (AuthModel::CheckSession()['bool']) {
-                return $next($request);
+                return redirect('/')->with('error', 'Unauthorizeds');
             }
-            return redirect('/')->with('error', 'Unauthorizeds');
+            return $next($request);
         }
     }
 }
