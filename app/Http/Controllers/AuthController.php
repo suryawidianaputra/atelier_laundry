@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\OTPMail;
+use App\Models\AuthModel;
 use Illuminate\Http\Request;
 use App\Models\UsersModel;
 use Illuminate\Support\Facades\Cookie;
@@ -24,39 +25,30 @@ class AuthController extends Controller
     public function HandleLogin(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|max:255',
+            'email' => 'required|email|string|max:255',
             'password' => 'required|string|max:255',
         ]);
 
         $remember = $request->has('remember');
 
-        $this->user_data = UsersModel::where('email', '=', $request->input('email'))->first();
-        if ($this->user_data === null) {
+        $user_data = UsersModel::where('email', '=', $request->input('email'))->first();
+        if ($user_data === null) {
             return back()->with('error', 'Account Not Found');
         }
-        if (!Hash::check($request->input('password'), $this->user_data->password)) {
+
+        if (!Hash::check($request->input('password'), $user_data->password)) {
             return back()->with('error', 'Password does not match');
         }
 
-        $user_data = [
-            'user_id' => $this->user_data->email,
-            'username' => $this->user_data->username,
-            'email' => $this->user_data->email,
-            'role' => $this->user_data->role,
-            'remember' => $remember,
-            'action' => 'login'
-        ];
+        $session_data = ['role' => $user_data->role, 'user_id' => $user_data->id];
 
-        // Cookie::queue(Cookie::make('user_data', json_encode($user_data)), 5);
-
-        $user_data = ['role' => $this->user_data->role, 'user_id' => $this->user_data->id];
         if ($remember) {
-            Cookie::queue(Cookie::make('user_data', json_encode($user_data)));
+            Cookie::queue(Cookie::make('user_data', json_encode($session_data), 60 * 24 * 30));
         }
 
-        session(['user_data' => $user_data]);
+        session(['user_data' => $session_data]);
 
-        return redirect('/');
+        return redirect($user_data->role == 'admin' ? 'dashboard' : '/');
     }
 
     public function hanldeRegister(Request $request)
@@ -83,35 +75,42 @@ class AuthController extends Controller
             return back()->with('error', 'Phone number is already used');
         }
 
-        $user_data = [
+        $upload_data = UsersModel::create([
             'username' => $request->input('username'),
             'email' => $request->input('email'),
-            'remember' => $remember,
-            'action' => 'register'
-        ];
+            'password' => Hash::make($request->input('password')),
+            'address' => $request->input('address'),
+            'phone_number' => $request->input('phone_number')
+        ])->refresh();
 
-        // Cookie::queue(Cookie::make('user_data', json_encode($user_data)), 5);
+        $user_data = ['user_id' => $upload_data->id, 'role' => $upload_data->role];
 
+        if ($remember) {
+            AuthModel::setCookie('user_data', json_encode($user_data));
+        }
+
+        session(['user_data' => $user_data]);
+        return redirect('/');
     }
 
-    public function verifyOTP(Request $request)
-    {
-        $user_data = json_decode(Cookie::get('user_data'), true);
+    // public function verifyOTP(Request $request)
+    // {
+    //     $user_data = json_decode(Cookie::get('user_data'), true);
 
-        $request->validate([
-            'action' => 'required',
-            'otp_code' => 'required|digits:6'
-        ]);
+    //     $request->validate([
+    //         'action' => 'required',
+    //         'otp_code' => 'required|digits:6'
+    //     ]);
 
-        return;
-    }
+    //     return;
+    // }
 
-    public function GenerateOTP()
-    {
-        $user_data = json_decode(Cookie::get('user_data'), true);
-        $generateOTP = rand(100000, 999999);
-        Cookie::queue(Cookie::make('otp_code', $generateOTP), 5);
-        Mail::to($user_data['email'])->send(new OTPMail($generateOTP, $user_data['username']));
-        return;
-    }
+    // public function GenerateOTP()
+    // {
+    //     $user_data = json_decode(Cookie::get('user_data'), true);
+    //     $generateOTP = rand(100000, 999999);
+    //     Cookie::queue(Cookie::make('otp_code', $generateOTP), 5);
+    //     Mail::to($user_data['email'])->send(new OTPMail($generateOTP, $user_data['username']));
+    //     return;
+    // }
 }

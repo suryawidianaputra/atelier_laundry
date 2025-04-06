@@ -10,8 +10,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('packages', function (Blueprint $table) {
-            $table->integer('price')->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('role')->nullable()->default('customer');
         });
     }
 

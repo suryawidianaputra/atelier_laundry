@@ -26,11 +26,8 @@ class AuthModel extends Model
         ];
     }
 
-    public static function SetSession()
+    public static function setCookie($key, $value)
     {
-        $user_data = self::CheckCookie()['data'];
-        if ($user_data['role'] && $user_data['user_id']) {
-            session(['user_data' => $user_data]);
-        }
+        Cookie::queue(Cookie::make($key, $value, 60 * 24 * 30));
     }
 }

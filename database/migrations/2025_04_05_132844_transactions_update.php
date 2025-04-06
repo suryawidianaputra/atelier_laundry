@@ -10,8 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('packages', function (Blueprint $table) {
-            $table->integer('price')->nullable();
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->uuid('id')->primary()->nullable()->change();
+            $table->string('payment_method')->nullable()->change();
+            $table->string('payment_status')->nullable()->change();
         });
     }
 
@@ -20,6 +22,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        //
+        Schema::table('transactions', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -14,7 +14,7 @@
                 @if (session('error'))
                     <p class="p-0 m-0"><span class="text-red-500">*</span> {{ session('error') }}</p>
                 @endif
-                <form action="" method="POST">
+                <form action="{{ route('api-register') }}" method="POST">
                     @csrf
                     {{-- username --}}
                     <div class="mt-5">
@@ -46,6 +46,10 @@
                         <input required type="tel" id="number" name="phone_number"
                             placeholder="Your phone number...."
                             class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                    </div>
+                    <div class="mb-2 flex items-center gap-1">
+                        <input type="checkbox" name="remember" id="remember">
+                        <label for="remember" class="text-[15px]">Remember me</label>
                     </div>
                     <p class="mt-4 mb-3 text-gray-600">Already have an account? <a href=""
                             class="text-blue-500">Login</a>

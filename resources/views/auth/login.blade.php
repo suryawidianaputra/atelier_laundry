@@ -12,20 +12,27 @@
                 <h2 class="text-2xl font-semibold text-gray-700 text-center">Login</h2>
                 <p class="text-gray-500 text-center mb-6">Welcome back! Please login to your account.</p>
 
-                <form action="" method="POST">
+                <form action="{{ route('api-login') }}" method="POST">
                     @csrf
                     @if (session('error'))
                         <p class="p-0 m-0"><span class="text-red-500">*</span> {{ session('error') }}</p>
                     @endif
+                    {{-- email --}}
                     <div class="mb-4">
                         <label class="block text-gray-600" for="email">Email</label>
                         <input type="text" id="email" name="email" placeholder="example@gmail.com"
                             class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
                     </div>
+                    {{-- password --}}
                     <div class="mb-4">
                         <label class="block text-gray-600" for="password">Password</label>
                         <input type="password" id="password" name="password" placeholder="••••••••"
                             class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    {{-- remember --}}
+                    <div class="mb-2 flex items-center gap-1">
+                        <input type="checkbox" name="remember" id="remember">
+                        <label for="remember" class="text-[15px]">Remember me</label>
                     </div>
                     <div class="flex justify-between items-center mb-4">
                         <a href="" class="text-blue-500 text-sm">Forgot Password?</a>

@@ -10,8 +10,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('packages', function (Blueprint $table) {
-            $table->integer('price')->nullable();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->enum('order_status', ['waiting', 'process', 'finish'])->default("waiting")->change();
         });
     }
 
@@ -20,6 +20,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        //
+        Schema::table('orders', function (Blueprint $table) {
+            //
+        });
     }
 };

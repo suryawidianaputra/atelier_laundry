@@ -23,9 +23,9 @@ Route::middleware(CheckCookieMiddleware::class)->group(function () {
         Route::get('/dashboard/{params?}/{paramsEnd?}', [DashboardController::class, 'index'])->name('dashboard');
     });
 
-
     Route::prefix("/api")->group(function () {
-        // 
+        Route::post('/auth/login', [AuthController::class, 'HandleLogin'])->name('api-login');
+        Route::post('/auth/register', [AuthController::class, 'hanldeRegister'])->name('api-register');
     });
 });
 
@@ -61,14 +61,31 @@ Route::get('/logout', function () {
     session()->forget('user_data');
     return redirect('/');
 });
-Route::get('/ex', function () {
-    $user_id = AuthModel::CheckSession()['data']['user_id'];
-    $user_data = UsersModel::where('id', $user_id)->value('username') ?? 'User';
 
-    var_dump($user_data);
+Route::get('/ex', function () {
+    $a = AuthModel::CheckSession();
+    $b = AuthModel::CheckCookie()['data'];
+
+    var_dump([$a]);
+
+    // if ($remember) {
+    //     AuthModel::setCookie('user_data', json_encode($user_data));
+    // }
+
+    // $user_data = ['role' => $this->user_data->role, 'user_id' => $this->user_data->id];
+    // $user_data = ['user_data' => ['role' => 'customer', 'user_id' => '1']];
+
+    // session($user_data);
+    // return redirect('/');
 });
 
 Route::get('/up', function () {
-    $upload = PackagesModel::create(['package_name' => 'Leguler'])->first();
-    var_dump($upload);
+    $upload_data = UsersModel::create([
+        'username' => 'test',
+        'email' => 'real@gmail.com',
+        'password' => 'akdsjfa;ksdjf',
+        'address' => 'aldsjfa;dlsk',
+        'phone_number' => 'aksdjf;alksdss'
+    ])->first();
+    var_dump($upload_data->role);
 });
