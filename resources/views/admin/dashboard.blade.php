@@ -7,7 +7,7 @@
         @elseif ($params == 'order-complated' && empty($paramsEnd))
             <h1>process</h1>
         @elseif (!empty($params) && $paramsEnd == 'detail-order')
-            <x-dashboard.detail_order :order_data="$order_data"></x-dashboard.detail_order>
+            <x-dashboard.detail_order :orderId="$params"></x-dashboard.detail_order>
         @else
             <x-dashboard.table></x-dashboard.table>
         @endif

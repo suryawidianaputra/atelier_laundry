@@ -11,6 +11,9 @@ use App\Http\Controllers\view\DashboardController;
 use App\Http\Controllers\view\LandingPageController;
 use App\Http\Controllers\AuthController;
 
+// api
+use App\Http\Controllers\api\OrderController;
+
 Route::middleware(CheckCookieMiddleware::class)->group(function () {
     Route::get('/', [LandingPageController::class, 'index'])->name('landing-page');
 
@@ -24,13 +27,19 @@ Route::middleware(CheckCookieMiddleware::class)->group(function () {
     });
 
     Route::prefix("/api")->group(function () {
+        // user
         Route::post('/auth/login', [AuthController::class, 'HandleLogin'])->name('api-login');
         Route::post('/auth/register', [AuthController::class, 'hanldeRegister'])->name('api-register');
+        // order
+        Route::post('/order-new', [OrderController::class, 'CreateOrder'])->name('api-new-order');
+        // Route::get('/order-userid/{user_id}', [OrderController::class, 'GetOrderByUserId'])->name('api-order-userid');
+        // Route::get('/order-orderid/{order_id}', [OrderController::class, 'GetOrderByUserId'])->name('api-order-userid');
     });
 });
 
 
 
+// dev
 use App\Models\AuthModel;
 use App\Models\UsersModel;
 use App\Models\PackagesModel;
@@ -63,10 +72,10 @@ Route::get('/logout', function () {
 });
 
 Route::get('/ex', function () {
-    $a = AuthModel::CheckSession();
+    $a = AuthModel::CheckSession()['data'];
     $b = AuthModel::CheckCookie()['data'];
 
-    var_dump([$a]);
+    var_dump('');
 
     // if ($remember) {
     //     AuthModel::setCookie('user_data', json_encode($user_data));
@@ -79,13 +88,13 @@ Route::get('/ex', function () {
     // return redirect('/');
 });
 
-Route::get('/up', function () {
-    $upload_data = UsersModel::create([
-        'username' => 'test',
-        'email' => 'real@gmail.com',
-        'password' => 'akdsjfa;ksdjf',
-        'address' => 'aldsjfa;dlsk',
-        'phone_number' => 'aksdjf;alksdss'
-    ])->first();
-    var_dump($upload_data->role);
-});
+// Route::get('/up', function () {
+//     $upload_data = UsersModel::create([
+//         'username' => 'test',
+//         'email' => 'real@gmail.com',
+//         'password' => 'akdsjfa;ksdjf',
+//         'address' => 'aldsjfa;dlsk',
+//         'phone_number' => 'aksdjf;alksdss'
+//     ])->first();
+//     var_dump($upload_data->role);
+// });

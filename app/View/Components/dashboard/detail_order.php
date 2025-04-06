@@ -2,6 +2,7 @@
 
 namespace App\View\Components\dashboard;
 
+use App\Models\OrdersModel;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -12,9 +13,11 @@ class detail_order extends Component
      * Create a new component instance.
      */
     public $order_data;
-    public function __construct($order_data = [])
+    public $order_id;
+    public function __construct($orderId)
     {
-        $this->order_data = $order_data;
+        $this->order_data = OrdersModel::where('id', '=', $orderId)->first();
+        $this->order_id = $orderId;
     }
 
     /**
@@ -22,6 +25,6 @@ class detail_order extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.dashboard.detail_order', ['order_data' => $this->order_data]);
+        return view('components.dashboard.detail_order', ['orderData' => $this->order_data]);
     }
 }

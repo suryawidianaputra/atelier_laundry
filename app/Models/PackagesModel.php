@@ -9,5 +9,6 @@ class PackagesModel extends Model
     protected $table = 'packages';
     protected $fillable = [
         'package_name',
+        'price'
     ];
 }
