@@ -2,7 +2,7 @@
     <div class="flex h-screen ">
         <!-- Sidebar -->
         <div id="sidebar"
-            class="fixed inset-y-0 left-0 w-64 bg-blue-500 text-white transform -translate-x-full sm:translate-x-0 sm:relative sm:flex flex-col transition-transform duration-300 ease-in-out">
+            class="fixed inset-y-0 left-0 w-64 bg-green-600 text-white transform -translate-x-full sm:translate-x-0 sm:relative sm:flex flex-col transition-transform duration-300 ease-in-out">
             <div class="p-4 text-lg font-semibold flex justify-between items-center">
                 <span>Dashboard</span>
                 <button id="closeSidebar" class="sm:hidden text-white text-xl">&times;</button>
@@ -10,7 +10,7 @@
             <nav class="flex-1 px-4 py-2">
                 @foreach ($nav_links as $data)
                     <a href="/dashboard/{{ $data['path'] }}"
-                        class="block py-2 px-4 rounded hover:bg-blue-700 my-2">{{ $data['name'] }}</a>
+                        class="block py-2 px-4 rounded hover:bg-green-700 my-2">{{ $data['name'] }}</a>
                 @endforeach
             </nav>
         </div>
@@ -40,7 +40,7 @@
     </div>
 
     {{-- show options --}}
-    <div class="absolute w-[150px] h-[180px] bg-blue-400 shadow-2xl top-14 right-5 hidden rounded-xl" id="UserOptions">
+    <div class="absolute w-[180px] h-[220px] bg-green-600 shadow-2xl top-14 right-5 hidden rounded-xl" id="UserOptions">
         <div class="p-3">
             <div class="w-full flex items-center flex-col pb-2 mb-4 border-b-2 border-white">
                 <img src="{{ asset('assets/icons/account.svg') }}" alt=""

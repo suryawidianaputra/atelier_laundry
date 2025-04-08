@@ -17,7 +17,8 @@ class OrdersModel extends Model
         'total_weight',
         'total_items',
         'package_id',
-        'total_amount'
+        'total_amount',
+        'note'
     ];
 
     public function user()
@@ -28,5 +29,10 @@ class OrdersModel extends Model
     public function package()
     {
         return $this->belongsTo(PackagesModel::class, 'package_id');
+    }
+
+    public function transaction()
+    {
+        return $this->hasOne(transactionsModel::class, 'order_id');
     }
 }

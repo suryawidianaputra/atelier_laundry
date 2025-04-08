@@ -10,11 +10,13 @@ use App\Http\Middleware\CheckCookieMiddleware;
 use App\Http\Controllers\view\DashboardController;
 use App\Http\Controllers\view\LandingPageController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\view\ReservasiController;
 
 // api
 use App\Http\Controllers\api\OrderController;
 
 Route::middleware(CheckCookieMiddleware::class)->group(function () {
+    // Auth
     Route::get('/', [LandingPageController::class, 'index'])->name('landing-page');
 
     Route::middleware([AuthorizationMiddleware::class . ':no'])->group(function () {
@@ -22,6 +24,12 @@ Route::middleware(CheckCookieMiddleware::class)->group(function () {
         Route::get('/auth/register', [AuthController::class, 'Register'])->name('auth-register');
     });
 
+    // customer
+    Route::middleware([RoleMiddleware::class . ':customer'])->group(function () {
+        Route::get('/reservasi', [ReservasiController::class, 'index'])->name('reservasi-page');
+    });
+
+    // admin
     Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
         Route::get('/dashboard/{params?}/{paramsEnd?}', [DashboardController::class, 'index'])->name('dashboard');
     });
@@ -31,7 +39,8 @@ Route::middleware(CheckCookieMiddleware::class)->group(function () {
         Route::post('/auth/login', [AuthController::class, 'HandleLogin'])->name('api-login');
         Route::post('/auth/register', [AuthController::class, 'hanldeRegister'])->name('api-register');
         // order
-        Route::post('/order-new', [OrderController::class, 'CreateOrder'])->name('api-new-order');
+        Route::post('/new-order', [OrderController::class, 'CreateOrder'])->name('api-new-order');
+        Route::post('/update-order', [OrderController::class, 'updateOrder'])->name('api-update-order');
         // Route::get('/order-userid/{user_id}', [OrderController::class, 'GetOrderByUserId'])->name('api-order-userid');
         // Route::get('/order-orderid/{order_id}', [OrderController::class, 'GetOrderByUserId'])->name('api-order-userid');
     });
@@ -42,24 +51,8 @@ Route::middleware(CheckCookieMiddleware::class)->group(function () {
 // dev
 use App\Models\AuthModel;
 use App\Models\UsersModel;
-use App\Models\PackagesModel;
-
-Route::get('/get-role', function () {
-    Cookie::queue(Cookie::make('role', 'admin'));
-    return redirect('/');
-});
-
-Route::get('/remove-cookie/{cookie_name}', function ($cookie_name) {
-    Cookie::queue(Cookie::forget($cookie_name));
-    return redirect('/');
-});
-
-Route::get('/set-cookie/{role?}', function ($role = 'user') {
-    $user_data = ['user_id' => 1, 'role' => $role];
-    Cookie::queue(Cookie::make('user_data', json_encode($user_data), 60 * 24));
-    session(['user_data' => $user_data]);
-    return redirect('/');
-});
+use App\Models\transactionsModel;
+use App\Models\PaymentMethod;
 
 Route::get('/view-cookie/{cookie_name}', function ($cookie_name) {
     var_dump($cookie_name == 'all' ? Cookie::get() : Cookie::get($cookie_name));
@@ -88,13 +81,11 @@ Route::get('/ex', function () {
     // return redirect('/');
 });
 
-// Route::get('/up', function () {
-//     $upload_data = UsersModel::create([
-//         'username' => 'test',
-//         'email' => 'real@gmail.com',
-//         'password' => 'akdsjfa;ksdjf',
-//         'address' => 'aldsjfa;dlsk',
-//         'phone_number' => 'aksdjf;alksdss'
-//     ])->first();
-//     var_dump($upload_data->role);
-// });
+Route::get('/up', function () {
+    // $upload_data = PaymentMethod::insert([
+    //     // 'payment_name' => 'transfer bank'
+    //     // 'payment_name' => 'e-Wallet'
+    //     // 'payment_name' => 'cash'
+    // ]);
+    // return redirect('/');
+});

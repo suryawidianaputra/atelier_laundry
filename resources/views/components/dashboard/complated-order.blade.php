@@ -1,5 +1,3 @@
-{{-- @dd($orders->package) --}}
-
 <div class="overflow-x-auto rounded-xl shadow-md bg-white">
     <table class="min-w-full table-auto">
         <thead class="bg-gradient-to-r from-green-400 to-green-600 text-black text-sm uppercase border-b-2">

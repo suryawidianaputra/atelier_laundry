@@ -56,7 +56,7 @@
                     </p>
                     {{-- button --}}
                     <button type="submit"
-                        class="w-full bg-blue-400 hover:bg-blue-600 text-white py-2 rounded-lg transition">Register</button>
+                        class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition">Register</button>
                 </form>
             </div>
         </div>
