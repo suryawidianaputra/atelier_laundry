@@ -29,8 +29,6 @@ class OrderController extends Controller
         }
         $user_data = AuthModel::CheckSession()['data']['user_id'];
 
-        var_dump($request->input('note', null));
-
         $order_data = OrdersModel::create([
             'user_id' => $user_data,
             'total_weight' => $request->input('total_weight'),

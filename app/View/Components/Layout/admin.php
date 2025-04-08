@@ -43,6 +43,10 @@ class admin extends Component
             [
                 'name' => 'Complated',
                 'path' => 'order-complated'
+            ],
+            [
+                'name' => 'Package',
+                'path' => 'packages'
             ]
         ];
     }
