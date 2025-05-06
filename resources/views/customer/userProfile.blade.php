@@ -3,7 +3,7 @@
         <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-4 gap-6">
             <!-- Sidebar -->
             <div
-                class="md:col-span-1 bg-white p-6 rounded-2xl flex flex-col items-center shadow-lg border border-green-200">
+                class="md:col-span-1 h-full md:h-[calc(100vh-5rem)] sticky top-20 bg-white p-6 rounded-2xl flex flex-col items-center shadow-lg border border-green-200">
                 <!-- Foto Profil -->
                 <div
                     class="w-32 h-32 rounded-full border-4 border-green-500 flex items-center justify-center text-center mb-6 text-green-700 font-bold">
@@ -22,7 +22,7 @@
                 <h2 class="text-2xl font-semibold text-green-800 mb-6">Order History</h2>
 
                 <!-- Kartu Order -->
-                <div class="border border-green-300 p-4 space-y-3 rounded-lg bg-green-50">
+                <div class="border border-green-300 p-4 space-y-3 rounded-lg bg-green-50 my-5">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div class="flex flex-wrap gap-4">
                             <button

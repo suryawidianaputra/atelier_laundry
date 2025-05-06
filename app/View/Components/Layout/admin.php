@@ -33,21 +33,20 @@ class admin extends Component
     {
         return [
             [
-                'name' => 'dashboard',
-                'path' => ''
-            ],
-            [
-                'name' => 'New Order',
-                'path' => 'new-order'
-            ],
-            [
-                'name' => 'Complated',
-                'path' => 'order-complated'
+                'name' => 'Order',
+                'path' => '',
+                'icon' => 'assets/icons/order.svg'
             ],
             [
                 'name' => 'Package',
-                'path' => 'packages'
-            ]
+                'path' => 'packages',
+                'icon' => 'assets/icons/package.svg'
+            ],
+            [
+                'name' => 'Completed',
+                'path' => 'order-completed',
+                'icon' => 'assets/icons/completed.svg'
+            ],
         ];
     }
 }

@@ -4,7 +4,7 @@
     <div class="mt-4">
         @if ($params == 'new-order' && empty($paramsEnd))
             <x-dashboard.newOrder></x-dashboard.newOrder>
-        @elseif ($params == 'order-complated' && empty($paramsEnd))
+        @elseif ($params == 'order-completed' && empty($paramsEnd))
             <x-dashboard.complated-order></x-dashboard.complated-order>
         @elseif ($params == 'packages' && empty($paramsEnd))
             <x-dashboard.packages></x-dashboard.packages>

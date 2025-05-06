@@ -3,14 +3,21 @@
         <!-- Sidebar -->
         <div id="sidebar"
             class="fixed inset-y-0 left-0 w-64 bg-green-600 text-white transform -translate-x-full sm:translate-x-0 sm:relative sm:flex flex-col transition-transform duration-300 ease-in-out">
-            <div class="p-4 text-lg font-semibold flex justify-between items-center">
-                <span>Dashboard</span>
-                <button id="closeSidebar" class="sm:hidden text-white text-xl">&times;</button>
+            <div class="w-full flex justify-end p-2">
+                <button id="closeSidebar" class="sm:hidden text-white text-2xl">&times;</button>
             </div>
-            <nav class="flex-1 px-4 py-2">
+            <div class="p-4 text-lg font-semibold flex flex-col items-center">
+                <img src="{{ asset('assets/icons/logo.svg') }}" alt="Laundry Icon" class="w-30 h-30">
+                <p class="text-white text-xl">Atelier Laundry</p>
+            </div>
+
+            <nav class="flex-1 px-4 py-2 mt-4 border-t-2 border-white">
                 @foreach ($nav_links as $data)
                     <a href="/dashboard/{{ $data['path'] }}"
-                        class="block py-2 px-4 rounded hover:bg-green-700 my-2">{{ $data['name'] }}</a>
+                        class="flex items-center py-2 px-4 rounded hover:bg-green-700 my-2 text-white">
+                        <img src="{{ asset($data['icon']) }}" alt="icon" class="w-6 h-6 object-contain mr-3">
+                        <p class="m-0">{{ $data['name'] }}</p>
+                    </a>
                 @endforeach
             </nav>
         </div>
@@ -40,7 +47,7 @@
     </div>
 
     {{-- show options --}}
-    <div class="absolute w-[180px] h-[220px] bg-green-600 shadow-2xl top-14 right-5 hidden rounded-xl" id="UserOptions">
+    <div class="absolute w-[180px] h-[220px] bg-green-500 shadow-2xl top-14 right-5 hidden rounded-xl" id="UserOptions">
         <div class="p-3">
             <div class="w-full flex items-center flex-col pb-2 mb-4 border-b-2 border-white">
                 <img src="{{ asset('assets/icons/account.svg') }}" alt=""
@@ -48,11 +55,15 @@
                 <p class="text-white pt-0.5 text-[18px]">{{ $username }}</p>
             </div>
             <div class="">
-                <a href="" class="flex group">
+                <a href="/logout" class="flex group">
                     <img src="{{ asset('assets/icons/gear.svg') }}" alt=""
                         class="w-[20px] rounded-full group-hover:rotate-180 duration-1000 group-hover:scale-[110%]">
                     <p class="text-white p-1 hover:underline">Setting</p>
                 </a>
+                <div class="flex mt-3">
+                    <img src="{{ asset('assets/icons/logout.svg') }}" alt="" class="w-[25px]">
+                    <a href="" class="text-white pl-1">Logout</a>
+                </div>
             </div>
         </div>
     </div>

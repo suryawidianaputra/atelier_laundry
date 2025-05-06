@@ -1,6 +1,9 @@
 {{-- @dd($orders->package) --}}
 
 <div class="overflow-x-auto rounded-xl shadow-md bg-white">
+    <div class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 w-max m-2">
+        <a href="/dashboard/new-order">Add New Order</a>
+    </div>
     <table class="min-w-full table-auto">
         <thead class="bg-gradient-to-r from-green-400 to-green-600 text-black text-sm uppercase border-b-2">
             <tr>
