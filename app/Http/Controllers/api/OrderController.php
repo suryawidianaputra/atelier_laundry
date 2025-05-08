@@ -40,7 +40,8 @@ class OrderController extends Controller
 
         transactionsModel::create(['order_id' => $order_data->id]);
 
-        return redirect('/dashboard')->with('success', 'Order created successfully');
+        // return redirect('/aaaaaa')->with('success', 'Order created successfully');
+        return response()->json(['data' => $order_data]);
     }
 
     public function updateOrder(Request $request)
@@ -74,8 +75,19 @@ class OrderController extends Controller
 
         return redirect('/dashboard');
     }
-    public function GetOrderByOrderId(Request $request)
+    public function reservation(Request $request)
     {
+        $request->validate(['package_id' => 'required', 'total_item' => 'required']);
 
+        $order_data = OrdersModel::create([
+            'user_id' => AuthModel::CheckSession()['data']['user_id'],
+            'package_id' => $request->input('package_id'),
+            'total_items' => $request->input('total_item'),
+            'order_status' => 'waiting'
+        ])->refresh();
+
+        transactionsModel::create(['order_id' => $order_data->id]);
+
+        return back()->with('success', true);
     }
 }

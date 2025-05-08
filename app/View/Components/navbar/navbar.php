@@ -3,6 +3,7 @@
 namespace App\View\Components\navbar;
 
 use App\Models\AuthModel;
+use App\Models\UsersModel;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -24,7 +25,11 @@ class navbar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.navbar.navbar', ['isLogin' => $this->isLogin, 'navLinks' => $this->navLink()]);
+        $sessionData = AuthModel::CheckSession()['data']['user_id'];
+
+        $userData = UsersModel::where('id', $sessionData)->first();
+
+        return view('components.navbar.navbar', ['isLogin' => $this->isLogin, 'navLinks' => $this->navLink(), 'user_data' => $userData]);
     }
 
     public function navLink()
@@ -36,20 +41,10 @@ class navbar extends Component
                 'icon' => './assets/icons/home.svg',
             ],
             [
-                'name' => 'Laundry',
-                'url' => '/',
+                'name' => 'Reservasi',
+                'url' => '/reservasi',
                 'icon' => './assets/icons/laundry.svg',
 
-            ],
-            [
-                'name' => 'Riwayat',
-                'url' => '/',
-                'icon' => './assets/icons/history.svg',
-            ],
-            [
-                'name' => 'Akun',
-                'url' => '/',
-                'icon' => './assets/icons/account.svg',
             ],
         ];
     }

@@ -1,44 +1,71 @@
 <x-layout.layout>
-    <div class="min-h-screen bg-green-50 text-green-900 flex justify-center items-start py-10 px-6">
-        <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-4 gap-6">
-            <!-- Sidebar -->
-            <div
-                class="md:col-span-1 bg-white p-6 rounded-2xl flex flex-col items-center shadow-lg border border-green-200">
-                <!-- Foto Profil -->
-                <div
-                    class="w-32 h-32 rounded-full border-4 border-green-500 flex items-center justify-center text-center mb-6 text-green-700 font-bold">
-                    <span>user profile</span>
+    <div class="fixed w-full">
+        <x-navbar></x-navbar>
+    </div>
+
+    <div class="min-h-screen bg-gray-300 flex items-center justify-center px-4">
+        <div class="bg-white text-green-800 w-full max-w-md p-8 rounded-2xl shadow-xl border border-green-300">
+            <h1 class="text-3xl font-bold text-center mb-6">🧺 Reservasi Laundry</h1>
+
+            <form action="{{ route('api-reservasi') }}" method="POST" class="space-y-6">
+                @csrf
+                <!-- Total Pakaian -->
+                <div>
+                    <label for="total_pakaian" class="block text-sm font-semibold mb-1">Total pakaian</label>
+                    <input type="text" id="total_pakaian" name="total_item"
+                        class="w-full px-4 py-2 bg-green-50 text-green-900 rounded-lg border border-green-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="Masukkan jumlah pakaian">
                 </div>
 
-                <!-- Info User -->
-                <div class="text-center space-y-1">
-                    <p class="text-lg font-semibold text-green-800">Username</p>
-                    <p class="text-sm text-green-600">Email</p>
+                <!-- Paket Pilihan -->
+                <div>
+                    <label for="paket" class="block text-sm font-semibold mb-1">Paket</label>
+                    <select name="package_id" id="paket"
+                        class="w-full px-4 py-2 bg-green-50 text-green-900 rounded-lg border border-green-300 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        @foreach ($package_data as $package)
+                            <option value="{{ $package['id'] }}">{{ $package['package_name'] }} |
+                                Rp{{ number_format($package['price']) }}/kg</option>
+                        @endforeach
+                    </select>
                 </div>
-            </div>
 
-            <!-- Konten Utama -->
-            <div class="md:col-span-3 bg-white p-6 rounded-2xl shadow-lg border border-green-200">
-                <h2 class="text-2xl font-semibold text-green-800 mb-6">Order History</h2>
-
-                <!-- Kartu Order -->
-                <div class="border border-green-300 p-4 space-y-3 rounded-lg bg-green-50">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                        <div class="flex flex-wrap gap-4">
-                            <button
-                                class="bg-green-200 border border-green-600 text-green-900 px-3 py-1 text-sm rounded">Paket</button>
-                            <span class="text-sm text-green-700 mt-1">17 - 04 - 2007</span>
-                        </div>
-                        <button
-                            class="bg-green-300 border border-green-700 text-green-900 px-4 py-1 text-sm rounded">status
-                            order</button>
-                    </div>
-                    <div>
-                        <button
-                            class="bg-green-200 border border-green-600 text-green-900 px-3 py-1 text-sm rounded">Harga</button>
-                    </div>
+                <!-- Tombol -->
+                <div class="pt-2">
+                    <button type="submit"
+                        class="w-full py-2 px-4 rounded-xl bg-green-600 hover:bg-green-700 text-white font-semibold transition">
+                        Reservasi
+                    </button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
+
+    <div
+        class="fixed inset-0 bg-black/60 flex justify-center items-center z-50 {{ !session('success') ? 'hidden' : '' }}">
+        <div class="bg-white w-[320px] max-w-[90%] rounded-2xl shadow-2xl p-6 text-center animate-fade-in">
+            <div class="flex items-center justify-center mb-4">
+                <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <h1 class="text-lg font-semibold text-gray-800 mb-2">
+                Reservasi telah berhasil
+            </h1>
+            <p class="text-sm text-gray-600 mb-6">
+                Harap membawa pakaian ke laundry
+            </p>
+            <button
+                class="bg-green-500 hover:bg-green-600 transition duration-200 text-white py-2 px-6 rounded-md shadow"
+                id="success">
+                Kembali
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("success").addEventListener("click", () => {
+            window.location.href = '/'
+        })
+    </script>
 </x-layout.layout>

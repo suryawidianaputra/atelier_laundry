@@ -45,16 +45,17 @@ Route::middleware(CheckCookieMiddleware::class)->group(function () {
         // user
         Route::post('/auth/login', [AuthController::class, 'HandleLogin'])->name('api-login');
         Route::post('/auth/register', [AuthController::class, 'hanldeRegister'])->name('api-register');
-        Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
-            // order
-            Route::post('/new-order', [OrderController::class, 'CreateOrder'])->name('api-new-order');
-            Route::post('/update-order', [OrderController::class, 'updateOrder'])->name('api-update-order');
-            // package
-            Route::post('/update-package', [PackageController::class, 'updatePackage'])->name('api-update-package');
-            Route::post('/new-package', [PackageController::class, 'newPackage'])->name('api-new-package');
-            Route::get('/delete-package', [PackageController::class, 'deletePackage'])->name('api-delete-package');
-        });
+        // Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
+        // order
+        Route::post('/new-order', [OrderController::class, 'CreateOrder'])->name('api-new-order');
+        Route::post('/update-order', [OrderController::class, 'updateOrder'])->name('api-update-order');
+        Route::post('/reservasi', [OrderController::class, 'reservation'])->name('api-reservasi');
+        // package
+        Route::post('/update-package', [PackageController::class, 'updatePackage'])->name('api-update-package');
+        Route::post('/new-package', [PackageController::class, 'newPackage'])->name('api-new-package');
+        Route::get('/delete-package', [PackageController::class, 'deletePackage'])->name('api-delete-package');
     });
+    // });
 });
 
 

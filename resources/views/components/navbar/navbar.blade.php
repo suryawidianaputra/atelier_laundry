@@ -5,11 +5,18 @@
             <img src="./assets/icons/logo.svg" alt="" class="h-[50px] rounded-[10px]">
         </div>
         {{-- nav links --}}
-        <div class="hidden sm:flex gap-4">
+        <div class="hidden sm:flex gap-4  items-center">
             @if ($isLogin)
                 @foreach ($navLinks as $navlink)
                     <a href="{{ $navlink['url'] }}" class="text-black font-bold">{{ $navlink['name'] }}</a>
                 @endforeach
+                <div class="flex items-center gap-2">
+                    <img src="{{ asset('assets/icons/user.svg') }}" alt=""
+                        class="h-[30px] border-black rounded-full border-2 cursor-pointer">
+                    <a href="{{ route('users-profile-page') }}">
+                        <h1 class="cursor-pointer">{{ $user_data->username }}</h1>
+                    </a>
+                </div>
             @else
                 <a href="{{ route('auth-login') }}"
                     class="bg-green-500 text-white py-2 px-4 rounded-[5px] w-max">Login</a>
@@ -33,6 +40,7 @@
                         <img src="{{ asset($navlink['icon']) }}" alt="" class="w-[30px]">
                     </div>
                 @endforeach
+                <h1>{{ $user_data->username }}</h1>
             @else
                 <div class="flex flex-col gap-4 w-full justify-center px-5 cursor-pointer mt-5">
                     <a href="{{ route('auth-login') }}"

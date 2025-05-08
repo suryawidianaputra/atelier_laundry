@@ -9,7 +9,7 @@
             <div class="flex flex-col">
                 <label class="text-sm text-gray-500 mb-1">Nama</label>
                 <input type="text"
-                    value="{{ $orderData->user->role == 'admin' ? Str::ucfirst('admin') : $order->user->username }}"
+                    value="{{ $orderData->user->role == 'admin' ? Str::ucfirst('admin') : $orderData->user->username }}"
                     class="border border-gray-300 rounded-lg px-3 py-2 bg-gray-100 text-gray-800" readonly>
             </div>
 

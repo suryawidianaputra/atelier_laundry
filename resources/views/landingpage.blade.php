@@ -159,7 +159,7 @@
             </div>
         </div>
 
-        <div class="w-full md:w-1/4 space-y-3">
+        {{-- <div class="w-full md:w-1/4 space-y-3">
             <p class="font-semibold text-lg">Menu</p>
             <div class="flex flex-col space-y-2 text-black text-sm">
                 @foreach ($footer['menus'] as $data)
@@ -169,7 +169,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+        </div> --}}
 
         <div class="w-full md:w-1/4 space-y-3">
             <p class="font-semibold text-lg">Contact</p>

@@ -10,6 +10,8 @@
             <x-dashboard.packages></x-dashboard.packages>
         @elseif ($params == 'new-package' && empty($paramsEnd))
             <x-dashboard.new-package></x-dashboard.new-package>
+        @elseif ($params == 'reservation' && empty($paramsEnd))
+            <x-dashboard.reservation></x-dashboard.reservation>
         @elseif (!empty($params) && $paramsEnd == 'detail-order')
             <x-dashboard.detail-order :orderData="$orderData"></x-dashboard.detail-order>
         @elseif (!empty($params) && $paramsEnd == 'detail-package')
