@@ -34,14 +34,15 @@ class OrderController extends Controller
             'total_weight' => $request->input('total_weight'),
             'total_items' => $request->input('total_items'),
             'package_id' => $package_data->id,
+            'order_status' => 'waiting',
             'total_amount' => $request->input('total_weight') * $package_data->price,
             'note' => $request->input('note')
         ])->refresh();
 
         transactionsModel::create(['order_id' => $order_data->id]);
 
-        // return redirect('/aaaaaa')->with('success', 'Order created successfully');
-        return response()->json(['data' => $order_data]);
+        return redirect('/aaaaaa')->with('success', 'Order created successfully');
+        // return response()->json(['data' => $order_data]);
     }
 
     public function updateOrder(Request $request)
